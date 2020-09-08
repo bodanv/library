@@ -14,30 +14,6 @@
       </h1>
     </header>
     <section class="books-container">
-      <div class="book-card">
-        <h2 class="book-title">
-          Harry Potter
-        </h2>
-      </div>
-      <div class="book-card">
-        <h2 class="book-title">
-          Harry Potter and the Prisoner of Azkaban
-        </h2>
-      </div>
-      <div class="book-card">
-        <h2 class="book-title">
-          Harry Potter and the Sorcerer's Stone
-        </h2>
-        <div class="book-info not-read">
-          <p>Author: J.K. Rowling</p>
-          <p>Pages: 215</p>
-          <p>Year published: 1997</p>
-          <div class="bottom-row">
-            <input type="checkbox" class="read-status"> Read?</input>
-            <button class="delete">Delete</button>
-          </div>
-        </div>
-      </div>
     </section>
     <div id="new-book-container">
       <div id="new-book-card">
@@ -46,7 +22,7 @@
             Add a New Book
           </h2>
         </div>
-        <form class="book-info">
+        <form class="book-info" action="#">
           <label for="title">Title</label><br>
           <input type="text" name="title" id="title"><br>
           <label for="author">Author</label><br>
@@ -57,7 +33,7 @@
           <input type="number" name="year" id="year"><br>
           <label for="read">Read?</label><br>
           <input type="checkbox" name="read" id="read"><br>
-          <button>Add</button>
+          <button id="add-book" target="#">Add</button>
         </form>
       </div>
     </div>

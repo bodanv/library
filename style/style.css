@@ -121,7 +121,7 @@ form.book-info{
 }
 
 .book-info {
-  padding: 3% 10%;
+  padding: 2% 10%;
   line-height: 3em;
   width: 100%;
   height: inherit;
@@ -130,9 +130,9 @@ form.book-info{
 }
 
 .book-info .bottom-row {
-  position: relative;
-  bottom: -15%;
-  left: 0%;
+    position: relative;
+    bottom: -15%;
+    left: 0%;
 }
 
 .book-title{
@@ -140,7 +140,7 @@ form.book-info{
   color: white;
   text-align: center;
   align-items: center;
-  padding: 3% 7%;
+  padding: 1% 7%;
   min-height: 15%;
   max-height: 30%;
 }
