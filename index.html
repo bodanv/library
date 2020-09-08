@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookshelf</title>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>
+        Bookshelf
+      </h1>
+    </header>
+    <section class="books-container">
+      <div class="book-card">
+        <h2 class="book-title">
+          Harry Potter
+        </h2>
+      </div>
+      <div class="book-card">
+        <h2 class="book-title">
+          Harry Potter and the Prisoner of Azkaban
+        </h2>
+      </div>
+      <div class="book-card">
+        <h2 class="book-title">
+          Harry Potter and the Sorcerer's Stone
+        </h2>
+        <div class="book-info not-read">
+          <p>Author: J.K. Rowling</p>
+          <p>Pages: 215</p>
+          <p>Year published: 1997</p>
+          <div class="bottom-row">
+            <input type="checkbox" class="read-status"> Read?</input>
+            <button class="delete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="new-book-container">
+      <div id="new-book-card">
+        <div class="book-title">
+          <h2>
+            Add a New Book
+          </h2>
+        </div>
+        <form class="book-info">
+          <label for="title">Title</label><br>
+          <input type="text" name="title" id="title"><br>
+          <label for="author">Author</label><br>
+          <input type="text" name="author" id="author"><br>
+          <label for="pages">Pages</label><br>  
+          <input type="number" name="pages" id="pages"><br>
+          <label for="read">Read?</label><br>
+          <input type="checkbox" name="read" id="read"><br>
+          <button>Add</button>
+        </form>
+      </div>
+    </div>
+    <button id="add">+</button>
+    <footer>Coded with 🧡 by&MediumSpace;<a href="https://github.com/bodanv" target="#"><strong>Bodan Velkovski</strong></a></footer>
+  </main>
+  <script src="js/index.js"></script>
+</body>
+</html>
