@@ -193,11 +193,11 @@ form.book-info{
   min-width: 320px;
   max-width: 480px;
   min-height: 320px;
-  max-height: 600px;
+  max-height: 90vh;
   padding-bottom: 96px;
   justify-self: center;
-  margin: 10vh auto 15vh auto;
-  overflow: hidden;
+  margin: 5vh auto 15vh auto;
+  overflow: auto;
   animation: myenter 0.7s;
   transform: scale(0.2);
   transition: all 0.3s ease-in-out;
@@ -206,7 +206,7 @@ form.book-info{
 #new-book-card button {
   position: fixed;
   bottom: 4vh;
-  left: 20px;
+  right: 20px;
   font-size: 1.5em;
 }
 
