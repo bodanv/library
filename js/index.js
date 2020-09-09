@@ -2,7 +2,8 @@
 const addBtn = document.getElementById("add");
 const addBook = document.getElementById("add-book");
 const modal = document.getElementById("new-book-container")
-let books = JSON.parse(localStorage.getItem("books"));
+let books = [];
+books.push(JSON.parse(localStorage.getItem("books")));
 
 // FUNCTIONS
 const openModal = () => {
@@ -104,9 +105,14 @@ addBook.addEventListener("click", e => {
 })
 })
 
-books.forEach(book => {
-  addNewBookCard(book.title, book.author, book.pages, book.published, book.read);
-})
+console.log(books)
+if(books !== null){
+  books.forEach(book => {
+    if (book !== null){
+      addNewBookCard(book.title, book.author, book.pages, book.published, book.read);
+    }
+  })
+}
 readStatus = Array.from(document.getElementsByClassName("read-status"));
 readStatus.forEach(checkbox => {
 checkbox.addEventListener('click', colorRead);
