@@ -7,6 +7,7 @@ let readStatus;
 let localBooks = JSON.parse(localStorage.getItem("books"));
 let books = [];
 if (localBooks !== null) {
+  console.log(localBooks);
   localBooks.forEach((localBook) => {
     books.push(
       new Book(
