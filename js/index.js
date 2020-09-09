@@ -1,119 +1,158 @@
 // CONSTANTS
 const addBtn = document.getElementById("add");
 const addBook = document.getElementById("add-book");
-const modal = document.getElementById("new-book-container")
+const modal = document.getElementById("new-book-container");
+let deleteButtons;
+let readStatus;
+let localBooks = JSON.parse(localStorage.getItem("books"));
 let books = [];
-books.push(JSON.parse(localStorage.getItem("books")));
+if (localBooks !== null) {
+  localBooks.forEach((localBook) => {
+    books.push(
+      new Book(
+        localBook.title,
+        localBook.author,
+        localBook.pages,
+        localBook.read
+      )
+    );
+  });
+}
 
 // FUNCTIONS
 const openModal = () => {
   addBtn.classList.add("active");
   modal.classList.add("visible");
-}
+};
 
 const closeModal = () => {
   addBtn.classList.remove("active");
   modal.classList.remove("visible");
-}
+};
 
-const colorRead = e => {
-  if(e.currentTarget.checked) {
+const colorRead = (e) => {
+  const title = e.currentTarget.parentNode.parentNode.previousElementSibling.innerHTML.trim();
+  if (e.currentTarget.checked) {
     e.currentTarget.parentNode.parentNode.classList.add("read");
     e.currentTarget.parentNode.parentNode.classList.remove("not-read");
+    books.forEach((book) => {
+      if (book.title == title) {
+        book.read = true;
+      }
+    });
   } else {
-    e.currentTarget.parentNode.parentNode.classList.add('not-read');
-    e.currentTarget.parentNode.parentNode.classList.remove('read');
+    e.currentTarget.parentNode.parentNode.classList.add("not-read");
+    e.currentTarget.parentNode.parentNode.classList.remove("read");
+    books.forEach((book) => {
+      if (book.title == title) {
+        book.read = false;
+      }
+    });
   }
-}
+  localStorage.setItem("books", JSON.stringify(books));
+};
 
-const newBook = (title, author, pages, year, read) => {
-  books.push(new Book(title, author, pages, year, read));
-}
+const deleteBook = (e) => {
+  const bookNode = e.currentTarget.parentNode.parentNode.parentNode;
+  const title = bookNode.firstChild.innerHTML.trim();
+  books = books.filter((book) => book.title !== title);
+  bookNode.parentNode.removeChild(bookNode);
+  localStorage.setItem("books", JSON.stringify(books));
+};
+
+const newBook = (title, author, pages, read) => {
+  books.push(new Book(title, author, pages, read));
+};
 
 // OBJECTS
-function Book(bookTitle, bookAuthor, bookPages, yearPublished, bookRead) {
+function Book(bookTitle, bookAuthor, bookPages, bookRead) {
   this.title = bookTitle;
   this.author = bookAuthor;
   this.pages = bookPages;
-  this.year = yearPublished;
   this.read = bookRead;
 }
 
-
-const addNewBookCard = (title, author, pages, published, read) => {
-  let newChild = document.createElement('div');
-  newChild.classList.add('book-card');
+const addNewBookCard = (title, author, pages, read) => {
+  let newChild = document.createElement("div");
+  newChild.classList.add("book-card");
   newChild.innerHTML = `<h2 class="book-title">
     ${title}
   </h2>
-  <div class="book-info ${read?'read':'not-read'}">
-    <p>Author: ${author}</p>
-    <p>Pages: ${pages}</p>
-    <p>Year published: ${published}</p>
+  <div class="book-info ${read ? "read" : "not-read"}">
+    <div>
+      <p>Author: ${author}</p>
+      <p>Pages: ${pages}</p>
+    </div>
     <div class="bottom-row">
-      <input type="checkbox" class="read-status" ${read?'checked':''}> Read?</input>
+      <input type="checkbox" class="read-status" ${
+        read ? "checked" : ""
+      }> Read?</input>
       <button class="delete">Delete</button>
     </div>
-  </div>
-  `
+  <div>
+  `;
   document.getElementsByClassName("books-container")[0].appendChild(newChild);
-}
+};
 
-let readStatus = Array.from(document.getElementsByClassName("read-status"));
+const updateReadStatus = () => {
+  readStatus = Array.from(document.getElementsByClassName("read-status"));
+  readStatus.forEach((checkbox) => {
+    checkbox.addEventListener("click", colorRead);
+  });
+  localStorage.setItem("books", JSON.stringify(books));
+};
 
-readStatus.forEach(checkbox => {
-  checkbox.addEventListener('click', colorRead);
-})
+const updateDeleteStatus = () => {
+  deleteButtons = Array.from(document.getElementsByClassName("delete"));
+  deleteButtons.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", deleteBook);
+  });
+  localStorage.setItem("books", JSON.stringify(books));
+};
 
-addBtn.addEventListener("click", e => {
+addBtn.addEventListener("click", (e) => {
   if (addBtn.classList.contains("active")) {
     closeModal();
   } else {
     openModal();
-    document.body.addEventListener('keyup', function handleEsc(e) {
+    document.body.addEventListener("keyup", function handleEsc(e) {
       if (e.key === "Escape") {
         closeModal();
-        document.body.removeEventListener('keyup', handleEsc);
+        document.body.removeEventListener("keyup", handleEsc);
       }
-    })
-    window.addEventListener('click', function handleClick(e) {
+    });
+    window.addEventListener("click", function handleClick(e) {
       if (e.target === modal) {
         closeModal();
-        document.body.removeEventListener('keyup', handleClick);
+        document.body.removeEventListener("keyup", handleClick);
       }
-    })
+    });
   }
-})
+});
 
-addBook.addEventListener("click", e => {
+addBook.addEventListener("click", (e) => {
   let title = document.getElementById("title").value;
   let author = document.getElementById("author").value;
   let pages = document.getElementById("pages").value;
-  let published = document.getElementById("year").value;
   let read = document.getElementById("read").checked;
-  addNewBookCard(title, author, pages, published, read);
-  newBook(title, author, pages, published, read);
-  localStorage.setItem("books", JSON.stringify(books))
+  addNewBookCard(title, author, pages, read);
+  newBook(title, author, pages, read);
+  localStorage.setItem("books", JSON.stringify(books));
   closeModal();
   e.preventDefault();
-  readStatus.forEach(checkbox => {
+  readStatus.forEach((checkbox) => {
     checkbox.removeEventListener("click", colorRead);
-  })
-  readStatus = Array.from(document.getElementsByClassName("read-status"));
-  readStatus.forEach(checkbox => {
-  checkbox.addEventListener('click', colorRead);
-})
-})
+  });
+  updateReadStatus();
+  updateDeleteStatus();
+});
 
-console.log(books)
-if(books !== null){
-  books.forEach(book => {
-    if (book !== null){
-      addNewBookCard(book.title, book.author, book.pages, book.published, book.read);
+if (books !== null) {
+  books.forEach((book) => {
+    if (book !== null) {
+      addNewBookCard(book.title, book.author, book.pages, book.read);
     }
-  })
+  });
 }
-readStatus = Array.from(document.getElementsByClassName("read-status"));
-readStatus.forEach(checkbox => {
-checkbox.addEventListener('click', colorRead);
-})
+updateReadStatus();
+updateDeleteStatus();
